@@ -1,84 +1,64 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Login.css";
-import Register from "./Register";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Login = () => {
-    const [login, setLogin] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [remember, setRemember] = useState<boolean>(false);
-    const [showRegister, setShowRegister] = useState<boolean>(false); // Yeni state
-
-    const navigate = useNavigate(); // Yönlendirme için hook
+    const navigate = useNavigate();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log({ login, password, remember });
+        console.log({ email, password });
         alert("Login successful!");
     };
 
-    const handleShowRegister = () => {
-        setShowRegister(true); // Kayıt formunu göster
-        navigate("/register"); // Register sayfasına yönlendir
+    const goToRegister = () => {
+        navigate("/register"); // Redirect to Register page
     };
 
     return (
-        <div className="login-container">
-            {showRegister ? (
-                <Register />
-            ) : (
-                <form className="login-form" onSubmit={handleSubmit}>
-                    <h2>Login</h2>
+        <section className="vh-100">
+    <div className="container py-5 h-100">
+        <div className="row d-flex justify-content-center align-items-center h-100">
+            <form className="col-12 col-md-6 col-lg-5 col-xl-4">
+                {/* Adjusted card size */}
+                <div className="card bg-dark text-white" style={{ borderRadius: "1rem", width: "100%", padding: "1rem", }}>
+                    <div className="card-body p-4 text-center">
+                        <div className="mb-md-3 mt-md-2 pb-3">
+                            <h3 className="fw-bold mb-3">Hoşgeldiniz 🎉</h3>
+                            <p className="text-white-50 mb-4">
+                                Lütfen kullanıcı adınızı ve şifrenizi giriniz!
+                            </p>
+                            <div className="form-outline form-white mb-3">
+                                <input type="email" id="typeEmailX" className="form-control form-control-sm" value={email} onChange={(e)=> setEmail(e.target.value)} placeholder="E-Mail adresinizi giriniz" required />
+                            </div>
 
-                    <div className="input-group">
-                        <label htmlFor="login">Mail Adresi</label>
-                        <input
-                            type="text"
-                            id="login"
-                            value={login}
-                            onChange={(e) => setLogin(e.target.value)}
-                            placeholder="E-mail"
-                            required
-                        />
-                    </div>
+                            <div className="form-outline form-white mb-3">
+                                <input type="password" id="typePasswordX" className="form-control form-control-sm" value={password} onChange={(e)=> setPassword(e.target.value)} placeholder="Şifrenizi giriniz" required />
+                            </div>
 
-                    <div className="input-group">
-                        <label htmlFor="password">Şifre</label>
-                        <input
-                            type="password"
-                            id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="********"
-                            required
-                        />
-                    </div>
+                            <p className="small mb-5 pb-lg-2"><a className="text-white-50" href="#!">Şifremi Unuttum</a>&#x1F41F;</p>
+                            <button className="btn btn-outline-light btn-sm px-4" type="submit" onClick={handleSubmit}>
+                                <i className="bi bi-box-arrow-in-right"></i> Giriş Yap
+                            </button>
 
-                    <div className="remember-group">
-                        <input
-                            type="checkbox"
-                            id="remember"
-                            checked={remember}
-                            onChange={() => setRemember(!remember)}
-                        />
-                        <label htmlFor="remember">Hatırla</label>
-                    </div>
+                        </div>
 
-                    <div className="button-group">
-                        <button type="submit" className="login-btn">
-                            Giriş Yap
-                        </button>
-                        <button
-                            type="button"
-                            className="home-btn"
-                            onClick={handleShowRegister} // Kayıt formunu göster
-                        >
-                            Kayıt Ol
-                        </button>
+                        <div>
+                            <p className="mb-0">
+                                Hesabım Yok?{" "}
+                                <a href="#!" className="text-white-50 fw-bold" onClick={goToRegister}>
+                                            Kayıt ol 
+                                        </a>
+                            </p>
+                        </div>
                     </div>
-                </form>
-            )}
+                </div>
+            </form>
         </div>
+    </div>
+</section>
     );
 };
 
