@@ -1,0 +1,34 @@
+.sidebar {
+  width: 250px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-item {
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 8px;
+  color: white !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-item:hover {
+  background: linear-gradient(to right, rgba(106, 17, 203, 1), rgb(58, 3, 117));
+  background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.sidebar h4 {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.sidebar .text-danger {
+  font-weight: 600;
+  color: rgba(203, 17, 106, 1);
+}
+
+.sidebar .text-danger:hover {
+  background: linear-gradient(to right, rgba(203, 17, 106, 1), rgba(106, 17, 203, 1));
+  color: #fff !important;
+}
