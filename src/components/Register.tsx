@@ -1,17 +1,59 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
+import axios from "axios";
 
 const Register = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [passAgain, setPasswordAgain] = useState<string>("");
+    const [name, setName] = useState<string>("");
+    const [surname, setSurname] = useState<string>("");
     const navigate = useNavigate(); // Yönlendirme için hook
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
-    const handleRegister = (e: React.FormEvent) => {
+    const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
+
         console.log({ email, password });
-        alert("Registration successful!");
+        if (!email.match(emailRegex)) {
+            alert('Lütfen geçerli bir e-posta adresi girin.');
+            return;
+        }
+        if (password != passAgain) {
+            alert("Şifreler aynı değil");
+            return;
+        }
+
+        const userData = {
+            password: password,
+            confirmationPassword: passAgain,
+            firstname: name,
+            lastname: surname,
+            email: email,
+            role: "USER", // default olarak 'USER' rolü atanıyor
+        };
+        try {
+            // API'ye POST isteği
+
+            const response = await axios.post('http://localhost:8080/api/v1/auth/register', userData);
+
+            const { access_token, refresh_token } = response.data;
+
+            // Token'ları localStorage'a kaydetme
+            localStorage.setItem('accessToken', access_token);
+            localStorage.setItem('refreshToken', refresh_token);
+
+            // Başarılı işlem sonrası yönlendirme
+            alert("Registration successful!");
+            // Örnek yönlendirme
+        } catch (error) {
+            //alert('Kayıt işlemi sırasında bir hata oluştu.');
+            alert(error);
+        }
+
+
+
     };
 
     const goBackToLogin = () => {
@@ -34,7 +76,12 @@ const Register = () => {
                                     <div className="form-outline form-white mb-3">
                                         <input className="form-control form-control-sm" type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="E-mail giriniz" required />
                                     </div>
-
+                                    <div className="form-outline form-white mb-3">
+                                        <input className="form-control form-control-sm" type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="İsim giriniz" required />
+                                    </div>
+                                    <div className="form-outline form-white mb-3">
+                                        <input className="form-control form-control-sm" type="text" id="surname" value={surname} onChange={(e) => setSurname(e.target.value)} placeholder="Soyisim giriniz" required />
+                                    </div>
                                     <div className="form-outline form-white mb-3">
                                         <input className="form-control form-control-sm" type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Şifre giriniz" required />
                                     </div>
