@@ -1,6 +1,7 @@
 .sidebar {
   width: 250px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
 }
 
 .sidebar-item {
@@ -31,4 +32,22 @@
 .sidebar .text-danger:hover {
   background: linear-gradient(to right, rgba(203, 17, 106, 1), rgba(106, 17, 203, 1));
   color: #fff !important;
+}
+.sidebar.closed {
+  width: 0;
+}
+
+.toggle-button {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  z-index: 1;
+  font-size: 1rem;
+}
+.sidebar-item .me-2 {
+  margin-right: 10px;
 }

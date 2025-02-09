@@ -1,21 +1,25 @@
-import React from "react";
+import React, { useState } from 'react';
 import { Nav } from "react-bootstrap";
-import {
-  FaThLarge,
-  FaUser,
-  FaSignOutAlt,
-  FaWalking,
-  FaReadme,
-  FaRegAngry,
-  FaInfoCircle,
-} from "react-icons/fa";
+import { FaWalking, FaReadme, FaRegAngry, FaInfoCircle, FaTasks, FaThLarge, FaUser, FaBars, FaSignOutAlt } from "react-icons/fa";
 import "./Left-Sidebar.css";
 
 const LeftSideBar: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <div className="sidebar d-flex flex-column vh-100">
+    <div className={`sidebar d-flex flex-column vh-100 ${isOpen ? 'open' : 'closed'}`}>
+      <button className="toggle-button" onClick={toggleSidebar}>
+        <FaBars />
+      </button>
       <h4></h4>
       <Nav className="flex-column px-3 py-4 flex-grow-1 justify-content-start">
+        <Nav.Link href="#" className="sidebar-item">
+          <FaTasks className="me-2" /> Create a task
+        </Nav.Link>
         <Nav.Link href="#" className="sidebar-item">
           <FaThLarge className="me-2" /> Dashboard
         </Nav.Link>
