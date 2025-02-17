@@ -61,12 +61,12 @@ const Register = () => {
     };
 
     return (
-        <section className="vh-100">
+        <section className="vh-100 ">
             <div className="container py-5 h-100">
                 <div className="row d-flex justify-content-center align-items-center h-100">
                     <form className="col-12 col-md-6 col-lg-5 col-xl-4">
                         {/* Adjusted card size */}
-                        <div className="card bg-dark text-white" style={{ borderRadius: "1rem", width: "100%", padding: "1rem", }}>
+                        <div className="card bg-dark text-white register-form">
                             <div className="card-body p-4 text-center">
                                 <div className="mb-md-3 mt-md-2 pb-3">
                                     <h3 className="fw-bold mb-3">Kayıt Ol</h3>

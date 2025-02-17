@@ -1,4 +1,13 @@
+/* custom.css */
+:root {
+  --bs-body-bg: white;
+  --bs-body-color: black;
+  --bs-primary: black;
+  --bs-secondary: white;
 
-.gradient-custom {
-  background: linear-gradient(to right, rgba(106, 17, 203, 1), rgb(58, 3, 117))
+}
+
+body {
+  background: linear-gradient(to right, #1f1f1f,#000000) ;
+  color: var(--bs-body-bg) !important;
 }

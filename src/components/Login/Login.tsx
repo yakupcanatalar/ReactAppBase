@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./Login.css";
 
 const Login = () => {
     const [email, setEmail] = useState<string>("");
@@ -28,7 +29,7 @@ const Login = () => {
                 <div className="row d-flex justify-content-center align-items-center h-100">
                     <form className="col-12 col-md-6 col-lg-5 col-xl-4">
                         {/* Adjusted card size */}
-                        <div className="card bg-dark text-white" style={{ borderRadius: "1rem", width: "100%", padding: "1rem", }}>
+                        <div className="login-form card bg-dark text-white ">
                             <div className="card-body p-4 text-center">
                                 <div className="mb-md-3 mt-md-2 pb-3">
                                     <h3 className="fw-bold mb-3">Hoşgeldiniz 🎉</h3>
