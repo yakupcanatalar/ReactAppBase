@@ -2,22 +2,27 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
+import { loginUser } from "../../Services/Services";
+
 
 const Login = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const navigate = useNavigate();
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log({ email, password });
-        if (!email.match(emailRegex)) {
-            alert('Lütfen geçerli bir e-posta adresi girin.');
-            return;
-        }
-        alert("Login successful!");
-    };
+
+    try {
+      const response = await loginUser({ email, password });
+      const { access_token, refresh_token } = response;
+      localStorage.setItem("accessToken", access_token);
+      localStorage.setItem("refreshToken", refresh_token);
+      navigate("/Admin");
+    } catch (error) {
+      alert("Login failed!");
+    }
+  };
 
     const goToRegister = () => {
         navigate("/register"); // Redirect to Register page

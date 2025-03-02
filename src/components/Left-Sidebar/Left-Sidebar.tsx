@@ -17,7 +17,7 @@ const LeftSideBar: React.FC = () => {
         <Nav.Link href="#" className="sidebar-item">
           <FaUser className="me-2" /> Profile
         </Nav.Link>
-        <Nav.Link href="#" className="sidebar-item">
+        <Nav.Link href="/Workflow" className="sidebar-item">
           <FaWalking className="me-2" /> WorkFlow
         </Nav.Link>
         <Nav.Link href="#" className="sidebar-item">
