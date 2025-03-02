@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { createTaskStage, getTaskStages } from "../../Services/Services"; // Import the createTaskStage and getTaskStages functions
+import { createTaskStage, getTaskStages, deleteTaskStageById, updateTaskStageById } from "../../Services/Services"; // Import the necessary functions
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentTaskId, setCurrentTaskId] = useState<number | null>(null);
   const [taskName, setTaskName] = useState("");
   const [taskNote, setTaskNote] = useState("");
   const [tasks, setTasks] = useState<{ id: number; task: string; action: () => void }[]>([]);
@@ -30,16 +34,25 @@ const Sidebar: React.FC = () => {
   };
 
   const addTask = () => {
+    setIsEditing(false);
+    setCurrentTaskId(null);
+    setTaskName("");
+    setTaskNote("");
     setShowModal(true);
   };
 
   const handleSave = async () => {
     try {
-      await createTaskStage({ name: taskName, note: taskNote });
+      if (isEditing && currentTaskId !== null) {
+        await updateTaskStageById(currentTaskId, { name: taskName, note: taskNote });
+        alert("Task stage updated successfully!");
+      } else {
+        await createTaskStage({ name: taskName, note: taskNote });
+        alert("Task stage created successfully!");
+      }
       setShowModal(false);
       setTaskName("");
       setTaskNote("");
-      alert("Task stage created successfully!");
       // Refresh the task list
       const taskStages = await getTaskStages();
       const formattedTasks = taskStages.map((taskStage: any) => ({
@@ -49,8 +62,37 @@ const Sidebar: React.FC = () => {
       }));
       setTasks(formattedTasks);
     } catch (error) {
-      console.error("Error creating task stage:", error);
-      alert("Failed to create task stage.");
+      console.error("Error saving task stage:", error);
+      alert("Failed to save task stage.");
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteTaskStageById(id);
+      alert("Task stage deleted successfully!");
+      // Refresh the task list
+      const taskStages = await getTaskStages();
+      const formattedTasks = taskStages.map((taskStage: any) => ({
+        id: taskStage.id,
+        task: taskStage.name,
+        action: () => console.log(`${taskStage.name} clicked`),
+      }));
+      setTasks(formattedTasks);
+    } catch (error) {
+      console.error("Error deleting task stage:", error);
+      alert("Failed to delete task stage.");
+    }
+  };
+
+  const handleEdit = (id: number) => {
+    const task = tasks.find((task) => task.id === id);
+    if (task) {
+      setIsEditing(true);
+      setCurrentTaskId(id);
+      setTaskName(task.task);
+      setTaskNote(""); // Assuming you have a way to get the note for the task
+      setShowModal(true);
     }
   };
 
@@ -74,7 +116,7 @@ const Sidebar: React.FC = () => {
             textAlign: "center",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "space-between",
             backgroundColor: "white",
             color: "black",
             border: "1px solid black",
@@ -82,6 +124,10 @@ const Sidebar: React.FC = () => {
           }}
         >
           {task}
+          <div style={{ display: "flex", gap: "5px" }}>
+            <FontAwesomeIcon icon={faEdit} onClick={() => handleEdit(id)} style={{ cursor: "pointer" }} />
+            <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(id)} style={{ cursor: "pointer" }} />
+          </div>
         </div>
       ))}
       <button onClick={addTask} style={{ backgroundColor: "transparent", border: "none", cursor: "pointer", fontSize: "30px", color: "white", marginTop: "10px" }}>+</button>
@@ -98,7 +144,7 @@ const Sidebar: React.FC = () => {
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
           zIndex: 1000,
         }}>
-          <h3>Create Task Stage</h3>
+          <h3>{isEditing ? "Edit Task Stage" : "Create Task Stage"}</h3>
           <input
             type="text"
             placeholder="Name"
@@ -112,7 +158,7 @@ const Sidebar: React.FC = () => {
             onChange={(e) => setTaskNote(e.target.value)}
             style={{ display: "block", marginBottom: "10px", width: "100%", padding: "8px" }}
           />
-          <button onClick={handleSave} style={{ marginRight: "10px" }}>Save</button>
+          <button onClick={handleSave} style={{ marginRight: "10px" }}>{isEditing ? "Update" : "Save"}</button>
           <button onClick={() => setShowModal(false)}>Cancel</button>
         </div>
       )}
