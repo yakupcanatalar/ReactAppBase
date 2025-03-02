@@ -1,8 +1,14 @@
-.footer {
-  border-top: 1.5px solid rgba(255,255,255,.5) !important;
-    background: linear-gradient(to right, #1f1f1f,#000000) ;
-}
-
 .copy-right {
   font-size: x-small;
+}
+
+footer {
+  width: 100%;
+  padding: 10px 0;
+  background-color: #f8f9fa;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  border-top: 1.5px solid rgba(255,255,255,.5) !important;
+  background: linear-gradient(to right, #1f1f1f,#000000) ;
 }

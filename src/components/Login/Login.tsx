@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
-import { loginUser } from "../../Services/Services";
+import { loginUser } from "../../Services/UserService";
 
 const Login = () => {
     const [email, setEmail] = useState<string>("");
@@ -17,14 +17,14 @@ const Login = () => {
             const { access_token, refresh_token } = response;
             localStorage.setItem("accessToken", access_token);
             localStorage.setItem("refreshToken", refresh_token);
-            navigate("/Admin"); // Redirect to Admin page after successful login
+            navigate("/admin");
         } catch (error) {
             alert("Login failed!");
         }
     };
 
     const goToRegister = () => {
-        navigate("/Register"); // Redirect to Register page
+        navigate("/register");
     };
 
     return (

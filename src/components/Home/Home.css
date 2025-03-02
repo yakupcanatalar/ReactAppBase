@@ -1,0 +1,22 @@
+.register-button{
+     background-color:transparent !important;
+     border: 1.5px solid rgba(255,255,255,.5) !important;
+     margin-right: 2%;
+}
+
+.home {
+     height: 100vh;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+   }
+   
+   footer {
+     width: 100%;
+     padding: 10px 0;
+     background-color: #f8f9fa;
+     position: absolute;
+     bottom: 0;
+     text-align: center;
+   }

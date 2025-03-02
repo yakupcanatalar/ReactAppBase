@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
-import { registerUser } from "../../Services/Services";
+import { registerUser } from "../../Services/UserService";
 
 const Register = () => {
   const [email, setEmail] = useState<string>("");
@@ -46,7 +46,7 @@ const Register = () => {
   };
 
   const goBackToLogin = () => {
-    navigate("/"); // Login sayfasına yönlendir
+    navigate("/login");
   };
 
   return (

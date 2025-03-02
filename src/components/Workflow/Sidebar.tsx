@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { createTaskStage, getTaskStages, deleteTaskStageById, updateTaskStageById } from "../../Services/Services"; // Import the necessary functions
+import { createTaskStage, getTaskStages, deleteTaskStageById, updateTaskStageById } from "../../Services/TaskStageService"; // Import the necessary functions
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 

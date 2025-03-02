@@ -14,27 +14,13 @@ import ReactFlow, {
 } from "reactflow";
 import "reactflow/dist/style.css";
 import Sidebar from "./Sidebar";
-import { getTasks, createTask, getTaskById, deleteTaskById, updateTaskById } from "../../Services/Services";
+import { getTasks, createTask, getTaskById, deleteTaskById, updateTaskById } from "../../Services/TaskService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const CustomNode = ({ data, id }: { data: { label: string; status: string; removeNode: (id: string) => void }, id: string }) => {
   return (
-    <div
-      style={{
-        backgroundColor: "#fff",
-        color: "#000",
-        borderRadius: "10px",
-        padding: "10px",
-        textAlign: "center",
-        border: "2px solid #000",
-        width: "150px",
-        height: "50px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-      }}
+    <div className="customNode"
     >
       {data.label}
       <button onClick={() => data.removeNode(id)} style={{ marginLeft: "10px", backgroundColor: "#000", color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer" }}>X</button>
