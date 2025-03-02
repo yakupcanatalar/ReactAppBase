@@ -97,10 +97,8 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <div style={{ width: "200px", padding: "10px", maxHeight: "100vh", overflowY: "auto", textAlign: "center" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid", paddingBottom: "5px" }}>
-        <h4 style={{ margin: 0 }}>Task Listesi</h4>
-      </div>
+<div style={{ width: "200px", padding: "10px", maxHeight: "100vh", overflowY: "auto", textAlign: "center" ,backgroundColor: "#000", color: "#fff" }}>
+      <h4 style={{ borderBottom: "1px solid", paddingBottom: "5px", textAlign: "center" }}>İş Adımları</h4>
       {tasks.map(({ id, task, action }) => (
         <div
           key={id}

@@ -14,7 +14,9 @@ import ReactFlow, {
 } from "reactflow";
 import "reactflow/dist/style.css";
 import Sidebar from "./Sidebar";
-import { getTasks, createTask, getTaskById } from "../../Services/Services";
+import { getTasks, createTask, getTaskById, deleteTaskById, updateTaskById } from "../../Services/Services";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const CustomNode = ({ data, id }: { data: { label: string; status: string; removeNode: (id: string) => void }, id: string }) => {
   return (
@@ -50,6 +52,9 @@ const FlowBuilder: React.FC = () => {
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
   const [savedFlows, setSavedFlows] = useState<{ id: number; name: string }[]>([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentFlowId, setCurrentFlowId] = useState<number | null>(null);
+  const [currentFlowName, setCurrentFlowName] = useState<string>("");
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -120,6 +125,19 @@ const FlowBuilder: React.FC = () => {
     }
   };
 
+  const updateFlow = async () => {
+    if (currentFlowId !== null) {
+      try {
+        const stageIds = nodes.map(node => Number(node.id));
+        await updateTaskById(currentFlowId, { name: currentFlowName, note: currentFlowName, stageIds });
+        setSavedFlows((flows) => flows.map(flow => flow.id === currentFlowId ? { id: flow.id, name: currentFlowName } : flow));
+        alert("✅ Akış güncellendi!");
+      } catch (error) {
+        console.error("Error updating flow:", error);
+      }
+    }
+  };
+
   const loadFlow = async (taskId: number) => {
     try {
       const task = await getTaskById(taskId);
@@ -138,13 +156,26 @@ const FlowBuilder: React.FC = () => {
         target: stage.id.toString(),
       }));
       setEdges(deserializedEdges);
+      setIsEditing(true);
+      setCurrentFlowId(taskId);
+      setCurrentFlowName(task.name);
     } catch (error) {
       console.error("Error loading flow:", error);
     }
   };
 
+  const deleteFlow = async (taskId: number) => {
+    try {
+      await deleteTaskById(taskId);
+      setSavedFlows((flows) => flows.filter(flow => flow.id !== taskId));
+      alert("✅ Akış silindi!");
+    } catch (error) {
+      console.error("Error deleting flow:", error);
+    }
+  };
+
   const goToHomePage = () => {
-    window.location.href = "/";
+    window.location.href = "/Admin";
   };
 
   return (
@@ -164,8 +195,8 @@ const FlowBuilder: React.FC = () => {
         onDrop={onDrop}
         onDragOver={(event) => event.preventDefault()}
       >
-        <button onClick={saveFlow} className="btn btn-secondary" style={{ position: "absolute", top: 10, right: 20, zIndex: 10 }}>
-          Kaydet
+        <button onClick={isEditing ? updateFlow : saveFlow} className="btn btn-secondary" style={{ position: "absolute", top: 10, right: 20, zIndex: 10 }}>
+          {isEditing ? "Güncelle" : "Kaydet"}
         </button>
         <ReactFlow
           nodes={nodes}
@@ -181,12 +212,14 @@ const FlowBuilder: React.FC = () => {
           <Background />
         </ReactFlow>
       </div>
-      <div style={{ width: "200px", padding: "10px", borderLeft: "1px solid #ddd", overflowY: "auto", textAlign: "center" }}>
-        <h4 style={{ borderBottom: "1px solid", paddingBottom: "5px" }}>Kaydedilenler</h4>
+      <div style={{ width: "200px", padding: "10px", maxHeight: "100vh", overflowY: "auto", textAlign: "center" ,backgroundColor: "#000", color: "#fff" }}>
+      <h4 style={{ borderBottom: "1px solid", paddingBottom: "5px", textAlign: "center" }}>İş Akışları</h4>
         {savedFlows.map((flow) => (
-          <ul key={flow.id} style={{ marginBottom: "10px" }}>
-            <li onClick={() => loadFlow(flow.id)} style={{ cursor: "pointer" }}>{flow.name}</li>
-          </ul>
+          <div key={flow.id} style={{ marginBottom: "10px", display: "flex", alignItems: "center", justifyContent: "space-between", backgroundColor: "#fff", color: "#000", padding: "5px", borderRadius: "5px" }}>
+            <span style={{ cursor: "pointer", flex: 1 }} onClick={() => loadFlow(flow.id)}>{flow.name}</span>
+            <FontAwesomeIcon icon={faEdit} onClick={() => loadFlow(flow.id)} style={{ cursor: "pointer", marginRight: "5px" }} />
+            <FontAwesomeIcon icon={faTrash} onClick={() => deleteFlow(flow.id)} style={{ cursor: "pointer" }} />
+          </div>
         ))}
         <button onClick={goToHomePage} className="btn btn-secondary" style={{ position: "fixed", bottom: 10, right: 20 }}> Ana Sayfaya Dön
         </button>
