@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
 import { loginUser } from "../../Services/Services";
 
-
 const Login = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -13,26 +12,26 @@ const Login = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-    try {
-      const response = await loginUser({ email, password });
-      const { access_token, refresh_token } = response;
-      localStorage.setItem("accessToken", access_token);
-      localStorage.setItem("refreshToken", refresh_token);
-      navigate("/Admin");
-    } catch (error) {
-      alert("Login failed!");
-    }
-  };
+        try {
+            const response = await loginUser({ email, password });
+            const { access_token, refresh_token } = response;
+            localStorage.setItem("accessToken", access_token);
+            localStorage.setItem("refreshToken", refresh_token);
+            navigate("/Admin"); // Redirect to Admin page after successful login
+        } catch (error) {
+            alert("Login failed!");
+        }
+    };
 
     const goToRegister = () => {
-        navigate("/register"); // Redirect to Register page
+        navigate("/Register"); // Redirect to Register page
     };
 
     return (
         <section className="vh-100">
             <div className="container py-5 h-100">
                 <div className="row d-flex justify-content-center align-items-center h-100">
-                    <form className="col-12 col-md-6 col-lg-5 col-xl-4">
+                    <form className="col-12 col-md-6 col-lg-5 col-xl-4" onSubmit={handleSubmit}>
                         {/* Adjusted card size */}
                         <div className="login-form card bg-dark text-white ">
                             <div className="card-body p-4 text-center">
@@ -50,7 +49,7 @@ const Login = () => {
                                     </div>
 
                                     <p className="small mb-5 pb-lg-2"><a className="text-white-50" href="#!">Şifremi Unuttum</a>&#x1F41F;</p>
-                                    <button className="btn btn-outline-light btn-sm px-4" type="submit" onClick={handleSubmit}>
+                                    <button className="btn btn-outline-light btn-sm px-4" type="submit">
                                         <i className="bi bi-box-arrow-in-right"></i> Giriş Yap
                                     </button>
 
