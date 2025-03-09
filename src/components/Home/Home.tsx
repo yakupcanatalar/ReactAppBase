@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Button } from 'react-bootstrap';
-import Footer from '../Footer/Footer';
 import "./Home.css";
+import Footer from '../../components/Footer/Footer';
 
 const Home: React.FC = () => {
   return (

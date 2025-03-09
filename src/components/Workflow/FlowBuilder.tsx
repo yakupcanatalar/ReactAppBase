@@ -198,7 +198,7 @@ const FlowBuilder: React.FC = () => {
           <Background />
         </ReactFlow>
       </div>
-      <div style={{ width: "200px", padding: "10px", maxHeight: "100vh", overflowY: "auto", textAlign: "center" ,backgroundColor: "#000", color: "#fff" }}>
+      <div style={{ width: "200px", padding: "10px", maxHeight: "100vh", overflowY: "auto", textAlign: "center", backgroundColor: "#000", color: "#fff", borderLeft: "1px solid #ddd" }}>
       <h4 style={{ borderBottom: "1px solid", paddingBottom: "5px", textAlign: "center" }}>İş Akışları</h4>
         {savedFlows.map((flow) => (
           <div key={flow.id} style={{ marginBottom: "10px", display: "flex", alignItems: "center", justifyContent: "space-between", backgroundColor: "#fff", color: "#000", padding: "5px", borderRadius: "5px" }}>

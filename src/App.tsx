@@ -1,13 +1,10 @@
 import "./App.css";
-import LeftSideBar from "./Components/Left-Sidebar/Left-Sidebar";
-
-const App = () => {
-
+import Cart from "./components/Admin/Cart";
+const App: React.FC = () => {
   return (
-    <div className="d-flex">
-      <LeftSideBar />
-      <div className="flex-grow-1 p-3">
-      </div>
+    <div className="App">
+      <Cart />
+      {/* Other components */}
     </div>
   );
 };

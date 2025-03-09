@@ -1,0 +1,51 @@
+.cart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: black !important;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: white;
+  transition: background-color 0.3s, color 0.3s;
+  height: 100%;
+  width: 100%;
+  
+}
+
+.cart-item:hover {
+  background-color: black;
+  color: white;
+}
+
+.cart-item .me-2 {
+  margin-right: 8px;
+}
+
+.card {
+  background-color: black;
+  border: 2px solid transparent;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.4);
+  border-color: white;
+}
+
+.admin-card-body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  text-align: center;
+  background-color: black;
+  border: 2px solid transparent;
+  border-color: white !important;
+}
