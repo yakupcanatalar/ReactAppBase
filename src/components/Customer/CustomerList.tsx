@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Form, Container, Button, InputGroup } from 'react-bootstrap';
 
-const CustomerList: React.FC<{ customers: any[], onSelect: (customer: any) => void, onAdd: () => void, onBack: () => void }> = ({ customers, onSelect, onAdd, onBack }) => {
+const CustomerList: React.FC<{ customers: any[], onSelect: (customer: any) => void, onAdd: () => void, onBack: () => void }> = ({ customers, onSelect}) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Form, Button, Container, Row, Col } from 'react-bootstrap';
-import { FaHome, FaSave, FaKey, FaArrowLeft } from 'react-icons/fa';
+import { FaHome, FaSave, FaKey } from 'react-icons/fa';
 
 const Profile: React.FC = () => {
   const [profile, setProfile] = useState({
@@ -42,10 +42,10 @@ const Profile: React.FC = () => {
       body: JSON.stringify(profile)
     })
       .then(response => response.json())
-      .then(data => {
-        // Handle successful profile update
-        alert('Profile updated successfully');
-      });
+      // .then(data => {
+      //   // Handle successful profile update
+      //   alert('Profile updated successfully');
+      // });
   };
 
   const handlePasswordChange = () => {
@@ -62,10 +62,10 @@ const Profile: React.FC = () => {
       })
     })
       .then(response => response.json())
-      .then(data => {
-        // Handle successful password change
-        alert('Password changed successfully');
-      });
+      // .then(data => {
+      //   // Handle successful password change
+      //   alert('Password changed successfully');
+      // });
   };
 
   return (

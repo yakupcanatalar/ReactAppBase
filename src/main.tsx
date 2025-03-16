@@ -17,7 +17,6 @@ import Settings from "./components/Settings/Settings";
 import Statistics from "./components/Statistics/Statistics";
 import Tasks from "./components/Tasks/Tasks";
 
-// Mock authentication status
 const isAuthenticated = !!localStorage.getItem("accessToken"); // Replace with actual authentication logic
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -27,15 +26,15 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <Route path="/home" element={<Home />} /> {/* Home Page */}
       <Route path="/register" element={<Register />} /> {/* Register Page */}
       <Route path="/login" element={<Login />} /> {/* Login Page */}
-      <Route path="/admin" element={<ProtectedRoute isAuthenticated={isAuthenticated} element={<App />} redirectTo="/Login" />} /> {/* Admin Page */}
-      <Route path="/admin/customer" element={<ProtectedRoute isAuthenticated={isAuthenticated} element={<CustomerManagement />} redirectTo="/Login" />} /> {/* Workflow Page */}
-      <Route path="/admin/workflow" element={<ProtectedRoute isAuthenticated={isAuthenticated} element={<FlowBuilder />} redirectTo="/Login" />} /> {/* Workflow Page */}
-      <Route path="/admin/dashboard" element={<Dashboard />} />
-          <Route path="/admin/tasks" element={<Tasks />} />
-          <Route path="/admin/profile" element={<Profile />} />
-          <Route path="/admin/statistics" element={<Statistics />} />
-          <Route path="/admin/settings" element={<Settings />} />
-          <Route path="/admin/about" element={<About />} />
+      <Route path="/admin" element={<ProtectedRoute isAuthenticated={isAuthenticated} element={<App />} redirectTo="/Login" />} /> 
+      <Route path="/admin/customer" element={<ProtectedRoute isAuthenticated={isAuthenticated} element={<CustomerManagement />} redirectTo="/Login" />} /> 
+      <Route path="/admin/workflow" element={<ProtectedRoute isAuthenticated={isAuthenticated} element={<FlowBuilder />} redirectTo="/Login" />} />
+      <Route path="/admin/dashboard" element={<ProtectedRoute isAuthenticated={isAuthenticated} element={<Dashboard />} redirectTo="/Login" />}  />
+      <Route path="/admin/tasks" element={<ProtectedRoute isAuthenticated={isAuthenticated} element={<Tasks />} redirectTo="/Login" />}  />
+      <Route path="/admin/profile" element={<ProtectedRoute isAuthenticated={isAuthenticated} element={<Profile />} redirectTo="/Login" />}  />
+      <Route path="/admin/statistics" element={<ProtectedRoute isAuthenticated={isAuthenticated} element={<Statistics />} redirectTo="/Login" />}  />
+      <Route path="/admin/settings" element={<ProtectedRoute isAuthenticated={isAuthenticated} element={<Settings />} redirectTo="/Login" />}  />
+      <Route path="/admin/about" element={<ProtectedRoute isAuthenticated={isAuthenticated} element={<About />} redirectTo="/Login" />}  />
           
           
     </Routes>
