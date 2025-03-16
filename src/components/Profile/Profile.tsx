@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Form, Button, Container, Row, Col } from 'react-bootstrap';
-import { FaHome, FaSave, FaKey } from 'react-icons/fa';
+import { FaHome, FaSave, FaKey, FaEdit } from 'react-icons/fa';
 
 const Profile: React.FC = () => {
   const [profile, setProfile] = useState({
@@ -135,8 +135,8 @@ const Profile: React.FC = () => {
               </tr>
             </tbody>
           </Table>
-          <Button variant="success" onClick={handleProfileUpdate} className="mb-4">
-            <FaSave /> Bilgileri Güncelle
+          <Button variant="warning" onClick={handleProfileUpdate} className="mb-4">
+            <FaEdit /> Bilgileri Güncelle
           </Button>
         </Col>
       </Row>

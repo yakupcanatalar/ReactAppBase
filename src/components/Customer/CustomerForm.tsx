@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Row, Col, Table } from 'react-bootstrap';
 import  CustomerDTO from '../../Services/Customer/CustomerDTO';
+import { FaArrowAltCircleLeft, FaArrowDown, FaArrowLeft, FaEdit, FaSave, FaStepBackward } from 'react-icons/fa';
 
 const CustomerForm: React.FC<{ onSave: (customer: any) => void, onCancel: () => void, customer?: any }> = ({ onSave, onCancel, customer: initialCustomer }) => {
   const [customer, setCustomer] = useState<CustomerDTO>({
@@ -78,8 +79,13 @@ const CustomerForm: React.FC<{ onSave: (customer: any) => void, onCancel: () => 
               </tbody>
             </Table>
             <div className="d-flex justify-content-between">
-              <Button variant="secondary" onClick={onCancel}>İptal</Button>
-              <Button variant="success" type="submit">{initialCustomer ? 'Güncelle' : 'Kaydet'}</Button>
+              <Button variant="secondary" onClick={onCancel}>
+                <FaArrowLeft/>
+                İptal</Button>
+
+                {initialCustomer ? <Button variant="warning" type="submit"><FaEdit/> Güncelle</Button> :
+                <Button variant="success" type="submit"><FaSave/>Kaydet</Button>
+}
             </div>
           </Form>
         </Col>

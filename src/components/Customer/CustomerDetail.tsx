@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Container, Table } from 'react-bootstrap';
+import { FaArrowLeft, FaEdit, FaTrash } from 'react-icons/fa';
 
 const CustomerDetail: React.FC<{ customer: any, onEdit: () => void, onDelete: () => void, onBack: () => void }> = ({ customer, onEdit, onDelete, onBack }) => {
   return (
@@ -30,10 +31,14 @@ const CustomerDetail: React.FC<{ customer: any, onEdit: () => void, onDelete: ()
         </tbody>
       </Table>
       <div className="d-flex justify-content-between">
-        <Button variant="secondary" onClick={onBack}>Geri</Button>
+        <Button variant="secondary" onClick={onBack}>
+          <FaArrowLeft/>Geri</Button>
         <div>
-          <Button variant="warning" onClick={onEdit} className="me-2">Düzenle</Button>
-          <Button variant="danger" onClick={onDelete}>Sil</Button>
+          <Button variant="warning" onClick={onEdit} className="me-2">
+             <FaEdit /> Düzenle
+            </Button>
+          <Button variant="danger" onClick={onDelete}>
+            <FaTrash/>Sil</Button>
         </div>
       </div>
     </Container>
