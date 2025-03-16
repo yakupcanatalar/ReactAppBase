@@ -1,44 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CustomerForm from './CustomerForm';
 import CustomerList from './CustomerList';
 import CustomerDetail from './CustomerDetail';
-import { Container, Pagination, Button } from 'react-bootstrap';
+import { Container, Button } from 'react-bootstrap';
 import { FaHome, FaUserPlus } from 'react-icons/fa';
 import CustomPagination from '../Pagination/CustomPagination';
+import CustomerService from '../../Services/Customer/CustomerService';
 
 const CustomerManagement: React.FC = () => {
-  const [customers, setCustomers] = useState<any[]>([
-    { name: 'John', surname: 'Doe', phone: '1234567890', email: 'john@example.com', address: '123 Main St', communicationPreference: 'EMAIL', note: 'Important client' },
-    { name: 'Jane', surname: 'Smith', phone: '0987654321', email: 'jane@example.com', address: '456 Elm St', communicationPreference: 'SMS', note: 'Follow up next week' },
-    { name: 'Alice', surname: 'Johnson', phone: '1112223333', email: 'alice@example.com', address: '789 Oak St', communicationPreference: 'WHATSAPP', note: 'Interested in new products' },
-    { name: 'Bob', surname: 'Brown', phone: '4445556666', email: 'bob@example.com', address: '101 Pine St', communicationPreference: 'NONE', note: '' },
-    { name: 'Charlie', surname: 'Davis', phone: '7778889999', email: 'charlie@example.com', address: '202 Maple St', communicationPreference: 'EMAIL', note: 'Prefers email communication' },
-    { name: 'David', surname: 'Wilson', phone: '2223334444', email: 'david@example.com', address: '303 Birch St', communicationPreference: 'SMS', note: 'Needs follow-up' },
-    { name: 'Eve', surname: 'Taylor', phone: '5556667777', email: 'eve@example.com', address: '404 Cedar St', communicationPreference: 'WHATSAPP', note: 'Potential lead' },
-    { name: 'Frank', surname: 'Anderson', phone: '8889990000', email: 'frank@example.com', address: '505 Walnut St', communicationPreference: 'NONE', note: '' },
-    { name: 'Grace', surname: 'Thomas', phone: '3334445555', email: 'grace@example.com', address: '606 Ash St', communicationPreference: 'EMAIL', note: 'Interested in discounts' },
-    { name: 'Hank', surname: 'Moore', phone: '6667778888', email: 'hank@example.com', address: '707 Cherry St', communicationPreference: 'SMS', note: 'Needs urgent attention' },
-    { name: 'John1', surname: 'Doe', phone: '1234567890', email: 'john@example.com', address: '123 Main St', communicationPreference: 'EMAIL', note: 'Important client' },
-    { name: 'Jane1', surname: 'Smith', phone: '0987654321', email: 'jane@example.com', address: '456 Elm St', communicationPreference: 'SMS', note: 'Follow up next week' },
-    { name: 'Alice1', surname: 'Johnson', phone: '1112223333', email: 'alice@example.com', address: '789 Oak St', communicationPreference: 'WHATSAPP', note: 'Interested in new products' },
-    { name: 'Bob1', surname: 'Brown', phone: '4445556666', email: 'bob@example.com', address: '101 Pine St', communicationPreference: 'NONE', note: '' },
-    { name: 'Charlie1', surname: 'Davis', phone: '7778889999', email: 'charlie@example.com', address: '202 Maple St', communicationPreference: 'EMAIL', note: 'Prefers email communication' },
-    { name: 'David1', surname: 'Wilson', phone: '2223334444', email: 'david@example.com', address: '303 Birch St', communicationPreference: 'SMS', note: 'Needs follow-up' },
-    { name: 'Eve1', surname: 'Taylor', phone: '5556667777', email: 'eve@example.com', address: '404 Cedar St', communicationPreference: 'WHATSAPP', note: 'Potential lead' },
-    { name: 'Frank1', surname: 'Anderson', phone: '8889990000', email: 'frank@example.com', address: '505 Walnut St', communicationPreference: 'NONE', note: '' },
-    { name: 'Grace1', surname: 'Thomas', phone: '3334445555', email: 'grace@example.com', address: '606 Ash St', communicationPreference: 'EMAIL', note: 'Interested in discounts' },
-    { name: 'Hank1', surname: 'Moore', phone: '6667778888', email: 'hank@example.com', address: '707 Cherry St', communicationPreference: 'SMS', note: 'Needs urgent attention' }
-  ]);
+  const [customers, setCustomers] = useState<any[]>([]);
   const [selectedCustomer, setSelectedCustomer] = useState<any | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const totalItems = 20; // Total number of items
-  const itemsPerPage = 10; // Items per page
+  const itemsPerPage = 10;
 
-  const handleSave = (customer: any) => {
-    setCustomers([...customers, customer]);
-    alert('Müşteri başarıyla eklendi');
-    setIsEditing(false);
+  const fetchCustomers = async () => {
+    try {
+      const customers = await CustomerService.getAllCustomers();
+      setCustomers(customers);
+    } catch (error) {
+      console.error('Error fetching customers:', error);
+      alert('Müşteriler alınırken bir hata oluştu');
+    }
+  };
+
+  useEffect(() => {
+    fetchCustomers();
+  }, []);
+
+  const handleSave = async (customer: any) => {
+    try {
+      if (selectedCustomer) {
+        await CustomerService.updateCustomer(selectedCustomer.id, customer);
+        alert('Müşteri başarıyla güncellendi');
+      } else {
+        await CustomerService.createCustomer(customer);
+        alert('Müşteri başarıyla eklendi');
+      }
+      setIsEditing(false);
+      setSelectedCustomer(null);
+      fetchCustomers();
+    } catch (error) {
+      console.error('Error saving customer:', error);
+      alert('Müşteri kaydedilirken bir hata oluştu');
+    }
   };
 
   const handleSelect = (customer: any) => {
@@ -50,11 +55,17 @@ const CustomerManagement: React.FC = () => {
     setIsEditing(true);
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (window.confirm('Bu müşteriyi silmek istediğinizden emin misiniz?')) {
-      setCustomers(customers.filter(c => c !== selectedCustomer));
-      setSelectedCustomer(null);
-      alert('Müşteri başarıyla silindi');
+      try {
+        await CustomerService.deleteCustomer(selectedCustomer.id);
+        setSelectedCustomer(null);
+        alert('Müşteri başarıyla silindi');
+        fetchCustomers();
+      } catch (error) {
+        console.error('Error deleting customer:', error);
+        alert('Müşteri silinirken bir hata oluştu');
+      }
     }
   };
 
@@ -65,12 +76,12 @@ const CustomerManagement: React.FC = () => {
 
   const handleCancel = () => {
     setIsEditing(false);
+    setSelectedCustomer(null);
   };
 
   const handleBack = () => {
     setSelectedCustomer(null);
   };
-
 
   const indexOfLastCustomer = currentPage * itemsPerPage;
   const indexOfFirstCustomer = indexOfLastCustomer - itemsPerPage;
@@ -84,13 +95,13 @@ const CustomerManagement: React.FC = () => {
 
     return (
       <div>
-      <CustomPagination
-        totalItems={totalItems}
-        itemsPerPage={itemsPerPage}
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-      />
-    </div>
+        <CustomPagination
+          totalItems={customers.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
     );
   };
 

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Row, Col, Table } from 'react-bootstrap';
+import  CustomerDTO from '../../Services/Customer/CustomerDTO';
 
 const CustomerForm: React.FC<{ onSave: (customer: any) => void, onCancel: () => void, customer?: any }> = ({ onSave, onCancel, customer: initialCustomer }) => {
-  const [customer, setCustomer] = useState({
+  const [customer, setCustomer] = useState<CustomerDTO>({
     name: '',
-    surname: '',
-    phone: '',
+    phoneNumber: '',
     email: '',
     address: '',
+    note: '',
     communicationPreference: 'NONE',
-    note: ''
   });
 
   useEffect(() => {
@@ -38,18 +38,14 @@ const CustomerForm: React.FC<{ onSave: (customer: any) => void, onCancel: () => 
               <tbody>
                 <tr>
                   <td><Form.Label>Ad</Form.Label></td>
-                  <td>
+                  <td colSpan={3}>
                     <Form.Control type="text" name="name" value={customer.name} onChange={handleChange} required minLength={2} maxLength={40} className="bg-dark text-white" />
-                  </td>
-                  <td><Form.Label>Soyad</Form.Label></td>
-                  <td>
-                    <Form.Control type="text" name="surname" value={customer.surname} onChange={handleChange} required minLength={2} maxLength={40} className="bg-dark text-white" />
                   </td>
                 </tr>
                 <tr>
                   <td><Form.Label>Telefon</Form.Label></td>
                   <td>
-                    <Form.Control type="tel" name="phone" value={customer.phone} onChange={handleChange} minLength={10} maxLength={10} className="bg-dark text-white" />
+                    <Form.Control type="tel" name="phoneNumber" value={customer.phoneNumber} onChange={handleChange} minLength={10} maxLength={10} className="bg-dark text-white" />
                   </td>
                   <td><Form.Label>E-posta</Form.Label></td>
                   <td>

@@ -9,11 +9,11 @@ const CustomerDetail: React.FC<{ customer: any, onEdit: () => void, onDelete: ()
         <tbody>
           <tr>
             <td><strong>Telefon:</strong></td>
-            <td>{customer.phone}</td>
+            <td>{customer.phoneNumber}</td>
           </tr>
           <tr>
             <td><strong>E-posta:</strong></td>
-            <td>{customer.email}</td>
+            <td>{customer.email}</td> 
           </tr>
           <tr>
             <td><strong>Adres:</strong></td>
