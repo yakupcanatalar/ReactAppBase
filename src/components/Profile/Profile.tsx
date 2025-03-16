@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Form, Button, Container, Row, Col } from 'react-bootstrap';
-import { FaHome, FaEdit } from 'react-icons/fa';
+import { FaHome, FaEdit, FaKey } from 'react-icons/fa';
 
 const Profile: React.FC = () => {
   const [profile, setProfile] = useState({
