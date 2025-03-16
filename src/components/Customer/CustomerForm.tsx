@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Row, Col, Table } from 'react-bootstrap';
 import  CustomerDTO from '../../Services/Customer/CustomerDTO';
-import { FaArrowAltCircleLeft, FaArrowDown, FaArrowLeft, FaEdit, FaSave, FaStepBackward } from 'react-icons/fa';
+import { FaArrowLeft, FaEdit, FaSave } from 'react-icons/fa';
 
 const CustomerForm: React.FC<{ onSave: (customer: any) => void, onCancel: () => void, customer?: any }> = ({ onSave, onCancel, customer: initialCustomer }) => {
   const [customer, setCustomer] = useState<CustomerDTO>({
