@@ -13,7 +13,7 @@ const Cart: React.FC = () => {
     { href: "/admin/statistics", icon: <MdBarChart className="me-2" />, text: "İstatistikler" },
     { href: "/admin/settings", icon: <MdSettings className="me-2" />, text: "Ayarlar" },
     { href: "/admin/about", icon: <MdInfo className="me-2" />, text: "Hakkında" },
-    { href: "#", icon: <MdExitToApp className="me-2" />, text: "Çıkış Yap", className: "text-danger" },
+    { href: "/admin/logout", icon: <MdExitToApp className="me-2" />, text: "Çıkış Yap", className: "text-danger" },
   ];
 
   return (
